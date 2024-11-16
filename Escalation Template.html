@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form with Definitions</title>
+  <style>
+    body {
+      background-color: #ffffcc; /* light yellow */
+      font-family: Arial, sans-serif;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-gap: 10px;
+      max-width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      border: 3px solid #ccc;
+      border-radius: 5px;
+      background-color: #fff;
+      position: relative; /* For positioning watermark inside form */
+    }
+
+    /* Watermark trademark styling */
+    .watermark {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 12px;
+      color: rgba(0, 0, 0, 0.1); /* Light grey and transparent */
+      font-weight: bold;
+      z-index: -1; /* Place it behind form content */
+      transform: rotate(-45deg); /* Rotate to give watermark effect */
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 5px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      resize: none;
+    }
+
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    /* Style for definitions */
+    .definition {
+      font-size: 12px;
+      color: #555;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+  </style>
+  <script>
+    function createPost() {
+      // Collect all input values
+      const fields = {
+        "CritSit Update": document.getElementById("slackpost").value,
+        "Customer Name": document.getElementById("customerName").value,
+        "CritSit Owner": document.getElementById("critSitOwner").value,
+        "Case & RFA #": document.getElementById("caseRfa").value,
+        "Case Owner(s)": document.getElementById("caseOwners").value,
+        "Environment": document.getElementById("environment").value,
+        "JIRA#": document.getElementById("jira").value,
+        "Engineering Owner": document.getElementById("engineeringOwner").value,
+        "Internal Teams Engaged": document.getElementById("internalTeams").value,
+        "Issue Description": document.getElementById("issueDescription").value,
+        "Business Impact": document.getElementById("businessImpact").value,
+        "Historic Information and Environment Info": document.getElementById("historicInfo").value,
+        "Current Status": document.getElementById("currentStatus").value,
+        "Next Steps and ETA": document.getElementById("nextSteps").value,
+        "Data/Log Collection": document.getElementById("dataLog").value,
+        "Outstanding Customer Questions": document.getElementById("outstandingQuestions").value,
+        "Exit Criteria": document.getElementById("exitCriteria").value,
+        "Expectation from Next Geo": document.getElementById("geoExpectation").value
+      };
+
+      // Open a new window
+      const newWindow = window.open("", "_blank");
+
+      // Write HTML content to the new window
+      newWindow.document.write("<!DOCTYPE html><html><head><title>Post Summary</title><style>");
+      newWindow.document.write("body { font-family: Arial, sans-serif; padding: 20px; }");
+      newWindow.document.write("h3 { color: #333; }");
+      newWindow.document.write("p { color: #555; margin-bottom: 20px; }");
+      newWindow.document.write("</style></head><body>");
+
+      newWindow.document.write("<h1>Post Summary</h1>");
+
+      // Loop through fields to create the content
+      for (const [label, value] of Object.entries(fields)) {
+        newWindow.document.write(`<h3>${label}</h3>`);
+        newWindow.document.write(`<p>${value ? value : "<em>No information provided</em>"}</p>`);
+      }
+
+      newWindow.document.write("</body></html>");
+      newWindow.document.close();
+    }
+  </script>
+</head>
+<body>
+
+  <form onsubmit="createPost(); return false;">
+    <!-- Trademark watermark -->
+    <div class="watermark">Shubhansh Thakur™</div>
+
+    <label for="slackpost">CritSit Update -</label>
+    <input type="text" id="slackpost" maxlength="50">
+    <div class="definition">Brief update about the critical situation.</div>
+
+    <label for="customerName">Customer Name:</label>
+    <input type="text" id="customerName" maxlength="50">
+    <div class="definition">Name of the customer affected by the issue.</div>
+
+    <label for="critSitOwner">CritSit Owner:</label>
+    <input type="text" id="critSitOwner" maxlength="50">
+    <div class="definition">Person responsible for managing the critical situation.</div>
+
+    <label for="caseRfa">Case &amp; RFA #:</label>
+    <input type="text" id="caseRfa" maxlength="50">
+    <div class="definition">Case and Request for Action number related to the issue.</div>
+
+    <label for="caseOwners">Case Owner(s):</label>
+    <input type="text" id="caseOwners" maxlength="50">
+    <div class="definition">Person(s) responsible for managing the case.</div>
+
+    <label for="environment">Environment:</label>
+    <input type="text" id="environment" maxlength="50">
+    <div class="definition">Environment where the issue occurred (e.g., production, testing).</div>
+
+    <label for="jira">JIRA#:</label>
+    <input type="text" id="jira" maxlength="50">
+    <div class="definition">JIRA issue number related to the issue.</div>
+
+    <label for="engineeringOwner">Engineering Owner:</label>
+    <input type="text" id="engineeringOwner" maxlength="50">
+    <div class="definition">Person responsible for managing the engineering aspects of the issue.</div>
+
+    <label for="internalTeams">Internal teams engaged (TAM/CMS/CCS etc.):</label>
+    <input type="text" id="internalTeams" maxlength="50">
+    <div class="definition">Internal teams involved in resolving the issue (e.g., TAM, CMS, CCS).</div>
+
+    <label for="issueDescription">Issue Description:</label>
+    <textarea id="issueDescription" rows="3" maxlength="1000" style="overflow: auto;"></textarea>
+    <div class="definition">A brief summary of the issue.</div>
+
+    <label for="businessImpact">Business Impact:</label>
+    <textarea id="businessImpact" rows="3" maxlength="1000" style="overflow: auto;"></textarea>
+    <div class="definition">Effect of the issue on the organization's operations and objectives.</div>
+
+    <label for="historicInfo">Historic Information and Environment Info:</label>
+    <textarea id="historicInfo" rows="3" maxlength="1000" style="overflow: auto;"></textarea>
+    <div class="definition">Relevant historical and contextual data related to the issue.</div>
+
+    <label for="currentStatus">Current Status:</label>
+    <textarea id="currentStatus" rows="3" maxlength="1000" style="overflow: auto;"></textarea>
+    <div class="definition">Current state of the issue and any actions being taken to address it.</div>
+
+    <label for="nextSteps">Next Steps and ETA:</label>
+    <textarea id="nextSteps" rows="3" maxlength="1000" style="overflow: auto;"></textarea>
+    <div class="definition">Planned actions and expected timeframe for resolving the issue.</div>
+
+    <label for="dataLog">Data/Log Collection:</label>
+    <textarea id="dataLog" rows="3" maxlength="1000" style="overflow: auto;"></textarea>
+    <div class="definition">Data or logs collected related to the issue.</div>
+
+    <label for="outstandingQuestions">Outstanding Customer Questions:</label>
+    <textarea id="outstandingQuestions" rows="3" maxlength="1000" style="overflow: auto;"></textarea>
+    <div class="definition">Questions from the customer that still need to be addressed.</div>
+
+    <label for="exitCriteria">Exit Criteria:</label>
+    <textarea id="exitCriteria" rows="3" maxlength="1000" style="overflow: auto;"></textarea>
+    <div class="definition">Requirements that must be met to consider the issue resolved.</div>
+
+    <label for="geoExpectation">Expectation from Next Geo:</label>
+    <textarea id="geoExpectation" rows="3" maxlength="1000" style="overflow: auto;"></textarea>
+    <div class="definition">Expected actions or contributions from the next geographical team.</div>
+
+    <input type="submit" value="Create Post">
+  </form>
+
+</body>
+</html>
